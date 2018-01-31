@@ -25,7 +25,12 @@ public class UserService {
 
     // Get users by firstName database
     public List<User> getUserByFirstName(String firstName) {
-        return userRepository.findByUsername(firstName);
+
+        List<User> users = userRepository.findByUsername(firstName);
+        if (users.isEmpty()) {
+            return null;
+        }
+        return users;
     }
 
     public List<User> getAllUserMovies() {
