@@ -13,15 +13,30 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    // Save new movie to database
+    @PostMapping(value = "/movie")
+    public String addMovie(@RequestBody Movie movie) {
+        movieService.saveMovie(movie);
+
+        return "Movie created with id = " + movie.getId() + " and title = " + movie.getTitle();
+    }
+
+    // Update movie in database
+    @PutMapping(value = "/movie")
+    public String updateMovie(@RequestBody Movie movie){
+        movieService.updateMovie(movie);
+        return "Movie update" + movie;
+    }
+
     // Get all movies from database
     @GetMapping(value = "/movie")
     public List<Movie> getMovies() {
         return movieService.getAllMovies();
     }
 
-    // Save new movie to database
-    @PostMapping(value = "/movie")
-    public void addMovie(@RequestBody Movie movie) {
-        movieService.save(movie);
+    // Get movie by id from database
+    @GetMapping(value = "/movie/{id}")
+    public Movie getMovieById(@PathVariable Long id) {
+        return movieService.getMovieById(id);
     }
 }

@@ -14,12 +14,26 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     // Save a movie to database
-    public void save(Movie movie) {
+    public void saveMovie(Movie movie) {
+        movieRepository.save(movie);
+    }
+
+    // Update a movie on database
+    public void updateMovie(Movie movie) {
         movieRepository.save(movie);
     }
 
     // Get all movies from database
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        List<Movie> movies = movieRepository.findAll();
+
+        return movies;
+    }
+
+    // Get movie by id from database
+    public Movie getMovieById(Long id) {
+        Movie movie = movieRepository.findOne(id);
+
+        return movie;
     }
 }
