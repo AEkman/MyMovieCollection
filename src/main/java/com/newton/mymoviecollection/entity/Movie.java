@@ -9,28 +9,21 @@ import java.util.List;
 public class Movie {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private Date year;
+    private String year;
     private String imdbId;
-    private String posterLink;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Rating> ratings;
+    private String poster;
 
     public Movie() {
     }
 
-    public Movie(String title, Date year, String imdbId, String posterLink) {
+    public Movie(String title, String year, String imdbId, String poster) {
         this.title = title;
         this.year = year;
         this.imdbId = imdbId;
-        this.posterLink = posterLink;
+        this.poster = poster;
     }
 
     // Getters and setters
@@ -50,11 +43,11 @@ public class Movie {
         this.title = title;
     }
 
-    public Date getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -66,19 +59,11 @@ public class Movie {
         this.imdbId = imdbId;
     }
 
-    public String getPosterLink() {
-        return posterLink;
+    public String getPoster() {
+        return poster;
     }
 
-    public void setPosterLink(String posterLink) {
-        this.posterLink = posterLink;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

@@ -10,27 +10,22 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
 
     @JsonIgnore
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Rating> ratings;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Movie> movies;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    User() {}
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password, List<Movie> movies) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.movies = movies;
     }
 
     // Getters and setters
@@ -58,19 +53,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public List<Movie> getMovies() {
+        return movies;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }

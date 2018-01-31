@@ -13,15 +13,13 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    // Save a movie to database
     public void save(Movie movie) {
         movieRepository.save(movie);
     }
 
+    // Get all movies from database
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
     }
-
-//    public List<Movie> getMovieByTitle(String title) {
-//        movieRepository.findByTitle(title);
-//    }
 }

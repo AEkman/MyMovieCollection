@@ -13,24 +13,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/user/register")
+    // Save new user to database
+    @PostMapping(value = "/user")
     public String register(@RequestBody User user){
-
         return "User created";
     }
 
-    @GetMapping(value = "/users")
-    public List<User> users(){
+    // Get all users from database
+    @GetMapping(value ="/user")
+    public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/logout")
-    public void logout(@RequestParam(value = "access_token") String accessToken){
-
-    }
-
-    @GetMapping(value ="/getUsername")
-    public void getUsername(){
-
+    // Get user by first name from database
+    @GetMapping(value ="/user/{firstName}")
+    public List<User> getUserByName(@RequestParam String firstName){
+        return userService.getUserByFirstName(firstName);
     }
 }

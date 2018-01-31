@@ -2,8 +2,10 @@ package com.newton.mymoviecollection.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping
 public class IndexController {
 
     @GetMapping(value="/")
@@ -11,7 +13,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping(value="/registration")
+    @GetMapping(value="/register")
     public String register(){
         return "register";
     }
@@ -19,5 +21,15 @@ public class IndexController {
     @GetMapping(value="/login")
     public String login(){
         return "login";
+    }
+
+    @GetMapping(value="/logout")
+    public String logout(){
+        return "logout";
+    }
+
+    @GetMapping(value = "/admin")
+    public String adminArea() {
+        return "Admin only";
     }
 }

@@ -13,15 +13,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // Save user to database
     public void save(User user){
         userRepository.save(user);
     }
 
-    public User getUser(String username){
-        return userRepository.findByUsername(username);
+    // Get all users from database
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public List<User> getAllUsers() {
+    // Get users by firstName database
+    public List<User> getUserByFirstName(String firstName) {
+        return userRepository.findByUsername(firstName);
+    }
+
+    public List<User> getAllUserMovies() {
         return userRepository.findAll();
     }
 }

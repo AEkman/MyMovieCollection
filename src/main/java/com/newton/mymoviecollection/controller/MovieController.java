@@ -13,15 +13,15 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    // Get all movies from database
     @GetMapping(value = "/movie")
     public List<Movie> getMovies() {
         return movieService.getAllMovies();
     }
 
-    @PostMapping(value = "/movie/add")
-    public String addMovie(@RequestBody Movie movie) {
+    // Save new movie to database
+    @PostMapping(value = "/movie")
+    public void addMovie(@RequestBody Movie movie) {
         movieService.save(movie);
-
-        return "Movie added";
     }
 }
