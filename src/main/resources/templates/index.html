@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>My Movie Collection - Index</title>
 </head>
@@ -19,13 +18,13 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">My Movies</a>
+                <a class="nav-link" href="http://localhost:8080/movies">My Movies</a>
             </li>
         </ul>
         <form class="form-inline">
             <div class="form-group mx-sm-3 mb-2">
                 <label for="inputPassword" class="sr-only">Email</label>
-                <input type="password" class="form-control" id="inputEmail" placeholder="Email" />
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" />
             </div>
             <div class="form-group mx-sm-3 mb-2" >
                 <label for="inputPassword" class="sr-only">Password</label>
@@ -36,12 +35,61 @@
     </div>
 </nav>
 
-<div id="mainContent" class="mainContent"></div>
+<div id="mainContent" class="mainContent">
+    <div class="card text-center text-white bg-dark mx-auto" style="width: 40rem" id="target">
+        <img class="card-img-top" src="https://i.imgur.com/CgaVJps.png"  alt="Welcome Image">
+        <div class="card-body">
+            <h5 class="card-title">Create new account</h5>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <a href="#" class="btn btn-primary" id="registerButton">Register</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Create new account</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="card mr-5 mx-auto" style="width: 20rem">
+                    <form>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="formControlInputName">Name:</label>
+                                <input type="text" class="form-control" id="formControlInputName" placeholder="Name:">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlInputPassword">Password:</label>
+                                <input type="password" class="form-control" id="formControlInputPassword" placeholder="Password:">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary mb-2" id="createAccountButton">Create</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script type="text/javascript" src="../static/js/index.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
 </body>
 </html>
