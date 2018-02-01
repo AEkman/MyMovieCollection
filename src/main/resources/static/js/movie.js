@@ -17,8 +17,20 @@ $(document).ready(function(){
     $content.on('click', ".addMovie", function(event) {
         var imdbId = $(this).attr('id');
         $.get(url, { apikey: apiKey, r: "json", i: imdbId}, function(data) {
-            var movie = { title: data.Title, year: data.Year, imdbId: data.imdbID, poster: data.Poster };
+            var movie = { "title": data.Title, "year": data.Year, "imdbId": data.imdbID, "poster": data.Poster };
 
+            $.ajax({
+              url: 'http://localhost:8080/movie/',
+              type: 'POST',
+              data: {
+                      title : "The Matrix",
+                      year: "2002",
+                      imdbId: "link",
+                      poster: "link"
+                    },
+              dataType: 'json',
+              contentType: 'application/json',
+            });
         });
     });
 

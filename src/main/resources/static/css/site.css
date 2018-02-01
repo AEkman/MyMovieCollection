@@ -1,0 +1,21 @@
+a.info {
+  margin: 5px;
+  float: left;
+}
+a.add {
+  margin: 5px;
+  float: right;
+  color: red;
+}
+
+div.cardStyle {
+  margin-top: 60px;
+  margin-left: 60px;
+  width: 18rem;
+  height: 540px;
+}
+
+div.cardStyle img {
+    width: auto;
+    height: 377px;
+}
