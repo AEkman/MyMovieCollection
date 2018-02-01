@@ -2,6 +2,7 @@ package com.newton.mymoviecollection.controller;
 
 import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.service.MovieService;
+import com.newton.mymoviecollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,4 +42,11 @@ public class MovieController {
     }
 
     //TODO delete movie
+    // Delete movie by id from database
+    @DeleteMapping(value = "/movie/delete/{imdbId}")
+    public String deleteMovie(@PathVariable String imdbId) {
+        movieService.deleteMovie(imdbId);
+
+        return "Movie " + imdbId + " deleted";
+    }
 }

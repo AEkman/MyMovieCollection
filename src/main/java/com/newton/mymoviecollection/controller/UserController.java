@@ -29,28 +29,21 @@ public class UserController {
     }
 
     // Add movie to user in database
-    @PutMapping(value = "/user/{id}/add/movie")
-    public String updateUserAddMovie(@PathVariable User id, @RequestBody Movie movie){
-        List<Movie> userMovieList = userService.getMoviesByUserId(id.getId());
+    @PutMapping(value = "/user/{user}/add/movie")
+    public String updateUserAddMovie(@PathVariable User user, @RequestBody Movie movie){
+        userService.updateUserAddMovie(user, movie);
 
-        //TODO fix dupliate
-        if (userMovieList.contains(movie)) {
-            return "Movie already exists";
-        } else {
-            userService.updateUserAddMovie(id, movie);
-
-            return "Movie " + movie.getTitle() + " got added to user " + id.getUsername();
-        }
+        return "Movie " + movie.getTitle() + " got added to user " + user.getUsername();
     }
 
     // Delete movie from user in database
-    @DeleteMapping(value = "/user/{id}/add/movie/{imdbId}")
+    @PutMapping(value = "/user/{id}/delete/movie/{imdbId}")
     public String updateUserDeleteMovie(@PathVariable User id, @PathVariable String imdbId){
         userService.updateUserDeleteMovie(id, imdbId);
-        return "Movie with imdb id " + imdbId + " deleted from user " + id;
+        return "Movie with imdb id " + imdbId + " deleted from user " + id.getUsername();
     }
 
-    //TODO: Delete user with movies attached
+    //TODO: Delete user when movies are attached
     // Delete user from database
     @DeleteMapping(value ="/user/delete/{id}")
     public String deleteUser(@PathVariable Long id){
