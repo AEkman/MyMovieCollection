@@ -22,7 +22,7 @@ $(document).ready( function() {
             type: 'POST',
             data: user,
             dataType: 'json',
-            contentTyp: 'application/json'
+            contentType: 'application/json'
         });
     });
 });
