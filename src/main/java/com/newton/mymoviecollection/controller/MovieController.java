@@ -18,7 +18,7 @@ public class MovieController {
     public String addMovie(@RequestBody Movie movie) {
         movieService.saveMovie(movie);
 
-        return "Movie created with id = " + movie.getId() + " and title = " + movie.getTitle();
+        return "Movie created with id = " + movie.getImdbId() + " and title = " + movie.getTitle();
     }
 
     // Update movie in database
@@ -35,8 +35,10 @@ public class MovieController {
     }
 
     // Get movie by id from database
-    @GetMapping(value = "/movie/{id}")
-    public Movie getMovieById(@PathVariable Long id) {
-        return movieService.getMovieById(id);
+    @GetMapping(value = "/movie/{imdbId}")
+    public Movie getMovieById(@PathVariable String imdbId) {
+        return movieService.getMovieByImdbId(imdbId);
     }
+
+    //TODO delete movie
 }

@@ -41,17 +41,37 @@ public class DatabaseSeeder implements CommandLineRunner {
         );
         movieService.saveMovie(terminator);
 
+        // Movie 3
+        Movie dirtyHarry = new Movie("Dirty Harry",
+                "1971",
+                "tt0066999",
+                "https://images-na.ssl-images-amazon.com/images/M/MV5BMTg3MDQ4Njg5MV5BMl5BanBnXkFtZTgwMTU2OTM5NDE@._V1._CR96,139,852,1256_SY132_CR0,0,89,132_AL_.jpg_V1_SX300.jpg"
+        );
+        movieService.saveMovie(dirtyHarry);
 
-        // User 1 "user/user"
-        User user = new User("user", "user", Arrays.asList(
-                new Movie("Titanic", "1995", "imdbid", "link"),
-                new Movie("Batman", "1992", "imdbid", "link")
-        ));
+        // Movie 4
+        Movie transformers = new Movie("Transformers",
+                "2007",
+                "tt0418279",
+                "https://images-na.ssl-images-amazon.com/images/M/MV5BNDg1NTU2OWEtM2UzYi00ZWRmLWEwMTktZWNjYWQ1NWM1OThjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+        );
+        movieService.saveMovie(transformers);
 
-        // User 2 "admin/admin"
-        User admin = new User("admin", "admin", Arrays.asList());
-
+        // Create User 1 "user/user"
+        User user = new User("user", "user", Arrays.asList());
         userService.saveUser(user);
+
+        // Create User 2 "admin/admin"
+        User admin = new User("admin", "admin", Arrays.asList());
         userService.saveUser(admin);
+
+        // Add 2 movies to user user
+        userService.updateUserAddMovie(user, harryPotter);
+        userService.updateUserAddMovie(user, terminator);
+
+        // Add 3 movies to user admin
+        userService.updateUserAddMovie(admin, harryPotter);
+        userService.updateUserAddMovie(admin, dirtyHarry);
+        userService.updateUserAddMovie(admin, transformers);
         }
 }

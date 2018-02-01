@@ -28,6 +28,36 @@ public class UserController {
         return "User updated";
     }
 
+    // Add movie to user in database
+    @PutMapping(value = "/user/{id}/add/movie")
+    public String updateUserAddMovie(@PathVariable User id, @RequestBody Movie movie){
+        List<Movie> userMovieList = userService.getMoviesByUserId(id.getId());
+
+        //TODO fix dupliate
+        if (userMovieList.contains(movie)) {
+            return "Movie already exists";
+        } else {
+            userService.updateUserAddMovie(id, movie);
+
+            return "Movie " + movie.getTitle() + " got added to user " + id.getUsername();
+        }
+    }
+
+    // Delete movie from user in database
+    @DeleteMapping(value = "/user/{id}/add/movie/{imdbId}")
+    public String updateUserDeleteMovie(@PathVariable User id, @PathVariable String imdbId){
+        userService.updateUserDeleteMovie(id, imdbId);
+        return "Movie with imdb id " + imdbId + " deleted from user " + id;
+    }
+
+    //TODO: Delete user with movies attached
+    // Delete user from database
+    @DeleteMapping(value ="/user/delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return "User " + id + " was deleted";
+    }
+
     // Get all users from database
     @GetMapping(value ="/user")
     public List<User> getAllUsers(){

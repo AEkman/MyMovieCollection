@@ -8,12 +8,13 @@ import java.util.List;
 @Table(name = "movie")
 public class Movie {
 
+//    @Id
+    //    private Long id;
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String imdbId;
     private String title;
     private String year;
-    private String imdbId;
     private String poster;
 
     public Movie() {
@@ -27,13 +28,13 @@ public class Movie {
     }
 
     // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getTitle() {
         return title;

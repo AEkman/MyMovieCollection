@@ -31,8 +31,8 @@ public class MovieService {
     }
 
     // Get movie by id from database
-    public Movie getMovieById(Long id) {
-        Movie movie = movieRepository.findOne(id);
+    public Movie getMovieByImdbId(String imdbId) {
+        Movie movie = movieRepository.findByImdbId(imdbId);
 
         return movie;
     }

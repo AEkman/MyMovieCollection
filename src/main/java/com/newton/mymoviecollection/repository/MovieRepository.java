@@ -8,5 +8,5 @@ import java.util.Date;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long>{
-    Movie findByTitle(String title);
+    Movie findByImdbId(String imdbId);
 }
