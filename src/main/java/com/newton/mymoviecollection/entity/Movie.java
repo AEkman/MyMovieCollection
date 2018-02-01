@@ -8,9 +8,6 @@ import java.util.List;
 @Table(name = "movie")
 public class Movie {
 
-//    @Id
-    //    private Long id;
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private String imdbId;
     private String title;
@@ -26,15 +23,6 @@ public class Movie {
         this.imdbId = imdbId;
         this.poster = poster;
     }
-
-    // Getters and setters
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     public String getTitle() {
         return title;

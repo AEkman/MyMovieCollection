@@ -36,4 +36,8 @@ public class MovieService {
 
         return movie;
     }
+
+    public void deleteMovie(String imdbId) {
+        movieRepository.delete(imdbId);
+    }
 }

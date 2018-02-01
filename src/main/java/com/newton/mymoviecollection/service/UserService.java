@@ -36,23 +36,29 @@ public class UserService {
     public void updateUserAddMovie(User user, Movie movie){
         List<Movie> movies = new ArrayList<>();
         userRepository.findOne(user.getId()).getMovies().forEach(movies::add);
-        //TODO if movie exists don't add
-        movies.add(movie);
-        user.setMovies(movies);
 
-        userRepository.save(user);
+        //TODO: Check for duplicates
+        if (movies.contains(movie)) {
+
+        } else {
+            movies.add(movie);
+            user.setMovies(movies);
+            userRepository.save(user);
+        }
     }
 
-    //TODO: Fix delete a movie from user
     // Update a user by deleting movie on database
     public void updateUserDeleteMovie(User user, String imdbId){
         List<Movie> movies = new ArrayList<>();
         userRepository.findOne(user.getId()).getMovies().forEach(movies::add);
 
-        if(movies.contains(imdbId)) {
-            movies.remove(imdbId);
-        } else {
+        Movie movieToDelete = movieService.getMovieByImdbId(imdbId);
+
+        if (movies.contains(movieToDelete)) {
+            movies.remove(movieToDelete);
             user.setMovies(movies);
+        } else {
+            System.out.println(imdbId + "doesn't exists");
         }
 
         userRepository.save(user);

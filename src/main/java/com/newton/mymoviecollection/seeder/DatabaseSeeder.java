@@ -72,6 +72,5 @@ public class DatabaseSeeder implements CommandLineRunner {
         // Add 3 movies to user admin
         userService.updateUserAddMovie(admin, harryPotter);
         userService.updateUserAddMovie(admin, dirtyHarry);
-        userService.updateUserAddMovie(admin, transformers);
         }
 }
