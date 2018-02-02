@@ -14,6 +14,13 @@ public class Movie {
     private String year;
     private String poster;
 
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "user_movies",
+            joinColumns = { @JoinColumn(name = "imdbId") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id")}
+    )
+    private List<User> users;
+
     public Movie() {
     }
 

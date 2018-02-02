@@ -34,15 +34,25 @@ public class UserService {
 
     // Update a user by adding movie on database
     public void updateUserAddMovie(User user, Movie movie){
-        List<Movie> movies = new ArrayList<>();
-        userRepository.findOne(user.getId()).getMovies().forEach(movies::add);
+        List<Movie> databaseMovies = movieService.getAllMovies();
 
-        //TODO: Check for duplicates
-        if (movies.contains(movie)) {
-
+        //TODO: fix
+        // Check i database has movie, if not add to database
+        if(!databaseMovies.equals(movie)) {
+            movieService.saveMovie(movie);
         } else {
-            movies.add(movie);
-            user.setMovies(movies);
+            System.out.println("movie exits already");
+        }
+
+        List<Movie> userMovies = userRepository.findOne(user.getId()).getMovies();
+
+        //TODO: fix
+        // Check if user already has movie
+        if (userMovies.contains(movie.getImdbId())) {
+            System.out.println("movie dupe");
+        } else {
+            userMovies.add(movie);
+            user.setMovies(userMovies);
             userRepository.save(user);
         }
     }
