@@ -17,8 +17,7 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "user_movies",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "imdbId")}
