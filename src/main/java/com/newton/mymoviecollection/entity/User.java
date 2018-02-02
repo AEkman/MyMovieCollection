@@ -15,8 +15,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-
-    @JsonIgnore
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
