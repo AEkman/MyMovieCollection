@@ -31,7 +31,20 @@ $(document).ready(function(){
 
     function addMovieToUserList(imdbId){
       $.get(url, { apikey: apiKey, r: "json", i: imdbId}, function(data) {
-          var movie = JSON.stringify({ "title": data.Title, "year": data.Year, "imdbId": data.imdbID, "poster": data.Poster });
+        var xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'user/1/add/movie');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          "title": data.Title,
+          "year": data.Year,
+          "imdbId": data.imdbID,
+          "poster": data.Poster
+        }));
+        xhr.onload = function() {
+          if (this.status == 200 && this.readyState == 4){
+            loadSearchResultLayout();
+          }
+        }
       });
     }
 
