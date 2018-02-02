@@ -43,7 +43,24 @@ public class MovieService {
 
     // Save a movie to database
     public void saveMovie(Movie movie) {
-        movieRepository.save(movie);
+
+        // Check if movie exists in database
+        List<Movie> databaseMovies = movieRepository.findAll();
+        boolean movieAlreadyExists = false;
+
+        for(int i = 0; i < databaseMovies.size(); i++) {
+            if(databaseMovies.get(i).getImdbId().contains(movie.getImdbId())) {
+                movieAlreadyExists = true;
+                break;
+            } else {
+                movieAlreadyExists = false;
+            }
+        }
+
+        if(movieAlreadyExists == false) {
+            movieRepository.save(movie);
+
+        }
     }
 
     // Update a movie on database
