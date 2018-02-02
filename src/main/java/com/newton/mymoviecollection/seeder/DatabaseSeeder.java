@@ -50,12 +50,12 @@ public class DatabaseSeeder implements CommandLineRunner {
         movieService.saveMovie(dirtyHarry);
 
         // Movie 4
-        Movie transformers = new Movie("Transformers",
-                "2007",
-                "tt0418279",
-                "https://images-na.ssl-images-amazon.com/images/M/MV5BNDg1NTU2OWEtM2UzYi00ZWRmLWEwMTktZWNjYWQ1NWM1OThjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
-        );
-        movieService.saveMovie(transformers);
+//        Movie transformers = new Movie("Transformers",
+//                "2007",
+//                "tt0418279",
+//                "https://images-na.ssl-images-amazon.com/images/M/MV5BNDg1NTU2OWEtM2UzYi00ZWRmLWEwMTktZWNjYWQ1NWM1OThjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+//        );
+//        movieService.saveMovie(transformers);
 
         // Create User 1 "user/user"
         User user = new User("user", "user", Arrays.asList());
