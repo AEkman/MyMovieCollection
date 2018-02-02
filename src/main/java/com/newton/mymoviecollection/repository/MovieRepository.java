@@ -6,11 +6,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, String>{
     Movie findByImdbId(String imdbId);
-//
-//    @Transactional
-//    Long deleteByImdbId(String imdbId);
+
+    List<Movie> findByTitleContaining(String title);
+
+    List<Movie> findByYearContaining(String year);
 }
