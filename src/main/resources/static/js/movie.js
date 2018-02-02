@@ -5,34 +5,54 @@ $(document).ready(function(){
 
     $('#searchInput').on('change', function (event){
         event.preventDefault();
-        $content.empty();
-        var $searchInput = $('#searchInput').val();
-
-        $.get(url, { apikey: apiKey, r: "json", s: $searchInput }, function(data) {
-            console.log(data);
-            createSearchResultCardLayout(data);
-        });
+        loadSearchResultLayout();
     });
+
+    function loadSearchResultLayout(){
+      $content.empty();
+      var $searchInput = $('#searchInput').val();
+
+      $.get(url, { apikey: apiKey, r: "json", s: $searchInput }, function(data) {
+          createSearchResultCardLayout(data);
+      });
+    }
 
     $content.on('click', ".addMovie", function(event) {
         var imdbId = $(this).attr('id');
-        $.get(url, { apikey: apiKey, r: "json", i: imdbId}, function(data) {
-            var movie = JSON.stringify({ "title": data.Title, "year": data.Year, "imdbId": data.imdbID, "poster": data.Poster });
+        var heartIcon = $(this).children().attr('id');
 
-            $.ajax({
-              url: 'http://localhost:8080/movie/',
-              type: 'POST',
-              data: movie,
-              dataType: 'json',
-              contentType: 'application/json',
-            });
-        });
+        if(heartIcon.indexOf("far fa-heart") > -1){
+          addMovieToUserList(imdbId);
+        }
+        else if(heartIcon.indexOf("fas fa-heart") > -1){
+          delMovieFromUserList(imdbId);
+        }
     });
 
+    function addMovieToUserList(imdbId){
+      $.get(url, { apikey: apiKey, r: "json", i: imdbId}, function(data) {
+          var movie = JSON.stringify({ "title": data.Title, "year": data.Year, "imdbId": data.imdbID, "poster": data.Poster });
+      });
+    }
+
+    function delMovieFromUserList(imdbId) {
+      var url = "http://localhost:8080/user/1/delete/movie/" + imdbId;
+      $.ajax({
+        url: url,
+        type: 'PUT',
+        success: function(){
+          loadSearchResultLayout();
+        }
+      });
+    }
+
     function createSearchResultCardLayout(data) {
+      $.get("http://localhost:8080/user/1/movies", function(userMovieList) {
         var result =  createModalHtml() +
-            '<div class="row">';
+                    '<div class="row">';
         $.each(data.Search, function (index, item) {
+          var heartIcon =  (userMovieList.some(x => x.imdbId == item.imdbID)) ? "fas fa-heart" : "far fa-heart";
+
             result += '<div class="col-xs-2>"> ' +
                 '<div class="card cardStyle">' +
                 '<img class="card-img-top" src="' + item.Poster + '"/> '+
@@ -41,7 +61,7 @@ $(document).ready(function(){
                 '</div>' +
                 '<div class="card-footer bg-transparent">' +
                 '<a href="#" class="infoMovie info btn btn-small btn-info" id="' + item.imdbID + '" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i> Info</a>' +
-                '<a href="#" class="add addMovie" id="' +  item.imdbID  + '"><i  class="fa fa-heart fa-2x"></i></a>' +
+                '<a href="#" class="add addMovie" id="' +  item.imdbID  + '"><i  id=" '+heartIcon +' " class="' + heartIcon + ' fa-2x"></i></a>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -49,6 +69,7 @@ $(document).ready(function(){
 
         result += '</div>';
         $content.append(result);
+      });
     }
 
     $content.on('click', '.infoMovie', function(event) {
