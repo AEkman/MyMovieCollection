@@ -19,3 +19,8 @@ div.cardStyle img {
     width: auto;
     height: 377px;
 }
+
+img.tableImg {
+  width: auto;
+  height: 100px;
+}
