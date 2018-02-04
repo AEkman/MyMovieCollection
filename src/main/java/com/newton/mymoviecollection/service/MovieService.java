@@ -3,6 +3,7 @@ package com.newton.mymoviecollection.service;
 import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,5 +72,9 @@ public class MovieService {
     // Delete movie by imdbId from database
     public void deleteMovie(String imdbId) {
         movieRepository.delete(imdbId);
+    }
+
+    @CacheEvict(value = "movies", allEntries = true)
+    public void evictCache() {
     }
 }

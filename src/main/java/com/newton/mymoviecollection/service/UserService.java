@@ -4,6 +4,7 @@ import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.entity.User;
 import com.newton.mymoviecollection.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class UserService {
         return users;
     }
 
-    // Get users by firstName from database
+    // Get user by id from database
     public User getUserById(Long id) {
         User user = userRepository.findOne(id);
 
@@ -99,7 +100,20 @@ public class UserService {
         return movies;
     }
 
+    // Delete user by id from database
     public void deleteUser(Long id) {
         userRepository.delete(id);
+    }
+
+    // Remove cache
+    @CacheEvict(value = "users", allEntries = true)
+    public void evictCache() {
+    }
+
+    // Get user byt username from database
+    public User getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+
+        return user;
     }
 }

@@ -30,6 +30,12 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    // Get user by username from database
+    @GetMapping(value ="/user/username/{username}")
+    public User getUserByUsername(@PathVariable String username){
+        return userService.getUserByUsername(username);
+    }
+
     // Get movies by user
     @GetMapping(value ="/user/{id}/movies")
     public List<Movie> getUserMovies(@PathVariable Long id){
