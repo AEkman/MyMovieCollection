@@ -11,8 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -27,39 +29,49 @@ public class UserServiceTest {
     @Autowired
     private MovieService movieService;
 
+    private User testUser;
+
+    private User createdUserId;
+
     @Before
     public void setUp() {
         // Reset cache before each test
         userService.evictCache();
+
+        // Setup a new user for testing
+        testUser = new User("testUser", "testUser", Arrays.asList());
+        userService.saveUser(testUser);
+
+        // Get info "id" for testUser
+        createdUserId = userService.getUserByUsername("testUser");
     }
 
     @Test
     public void saveUser() {
-        User testUser = new User("testUser", "testUser", Arrays.asList());
-        userService.saveUser(testUser);
+        User result = userService.getUserById(createdUserId.getId());
 
-        User result = userService.getUserById(testUser.getId());
-
-        Assert.assertEquals("Failure - Couldn't find testUser", testUser, result);
+        Assert.assertEquals("Failure - Couldn't find testUser", "testUser", result.getUsername());
     }
 
     @Test
     public void updateUser() {
-        User testUser = new User("testUser", "testUser", Arrays.asList());
-        userService.saveUser(testUser);
+        createdUserId.setUsername("testUserUpdated");
+        userService.updateUser(createdUserId);
 
-        User testUserToUpdate = userService.getUserByUsername("testUser");
-        testUserToUpdate.setUsername("testUserUpdated");
+        User result = userService.getUserById(createdUserId.getId());
 
-        userService.updateUser(testUserToUpdate);
-
-        User result = userService.getUserById(testUserToUpdate.getId());
-
-        Assert.assertEquals("Failure - Couldn't find the testUser or name has not been updated", testUserToUpdate, result);
+        Assert.assertEquals("Failure - Couldn't find the testUser or name has not been updated", createdUserId, result);
     }
 
     @Test
     public void updateUserAddMovie() {
+//        Movie testMovie = new Movie("testTitle", "TestYear", "imdbid1234", "testPoster");
+//
+//        userService.updateUserAddMovie(testUser, testMovie);
+//
+//        List<Movie> result = userService.getMoviesByUserId(createdUserId.getId());
+//
+//        Assert.assertEquals("Failed - couldnt't find new movie", "testTitle", result);
     }
 
     @Test
@@ -75,7 +87,7 @@ public class UserServiceTest {
         User testUser = new User("testuser", "testpassword", Arrays.asList());
         userService.saveUser(testUser);
 
-        Collection<User> listAfter = userService.getAllUsers();
+        List<User> listAfter = userService.getAllUsers();
 
         int countListAfter = listAfter.size();
 
@@ -87,13 +99,22 @@ public class UserServiceTest {
 
     @Test
     public void getUserById() {
+        User result = userService.getUserById(createdUserId.getId());
+
+        Assert.assertEquals("Failure - get user by id failed", createdUserId.getId(), result.getId());
     }
 
     @Test
     public void getMoviesByUserId() {
+
     }
 
     @Test
     public void deleteUser() {
+        userService.deleteUser(createdUserId.getId());
+
+        User result = userService.getUserById(createdUserId.getId());
+
+        Assert.assertEquals("Failed - user not deleted", null, result);
     }
 }
