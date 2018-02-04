@@ -8,6 +8,16 @@ a.add {
   color: red;
 }
 
+a.infoUser {
+  margin: 5px;
+  float: left;
+}
+a.addUser {
+  margin: 5px;
+  float:left;
+  color: red;
+}
+
 div.cardStyle {
   margin-top: 60px;
   margin-left: 60px;
@@ -20,7 +30,27 @@ div.cardStyle img {
     height: 377px;
 }
 
+div.left {
+  float: left;
+}
+
 img.tableImg {
   width: auto;
   height: 100px;
+}
+
+table {
+  table-layout: fixed;
+}
+
+th.width10 {
+  width: 10%;
+}
+
+th.width20 {
+  width: 20%;
+}
+
+th.width60 {
+  width: 60%;
 }

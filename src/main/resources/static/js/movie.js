@@ -84,30 +84,74 @@ function getUserMovies() {
     if(this.status == 200 && this.readyState === 4){
       var data = JSON.parse(this.responseText);
       var result = createModalHtml() +
-                  '<table class="table-responsive table-striped">' +
+                  '<div class="container left"><table class="table table-responsive table-striped">' +
                   '<thead>' +
                   '<tr>' +
-                  '<th scope="col">Movie</th>' +
-                  '<th scope="col"></th>' +
-                  '<th scope="col"></th>' +
+                  '<th class="width10" scope="col"></th>' +
+                  '<th class="width60" scope="col">Title ' +
+                  '<a href="#" id="asc" class="movieTitle"><i class="fas fa-chevron-up"></i></a> ' +
+                  '<a href="#" id="desc" class="movieTitle"><i class="fas fa-chevron-down"></i></a> ' +
+                  '</th>' +
+                  '<th class="width10" scope="col">Year ' +
+                  '<a href="#" id="movieYearAsc"><i class="fas fa-chevron-up"></i></a> ' +
+                  '<a href="#" id="movieYearDesc"><i class="fas fa-chevron-down"></i></a> ' +
+                  '</th>' +
+                  '<th class="width20" scope="col"></th>' +
                   '</tr>' +
                   '</thead>' +
-                  '<tbody>';
+                  '<tbody id="userTable" >';
       for(var i = 0; i < data.length; i++) {
-        console.log(data);
         result += '<tr>' +
                   '<td scope="row"><img class="tableImg" src="' + data[i].poster + '"/></td>' +
-                  '<td>' + data[i].title+ '</td>' +
-                  '<td><a href="#" class="infoMovie info btn btn-small btn-info" id="' + data[i].imdbId + '" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i> Info</a></td>' +
-                  '<td><a href="#" class="add removeFromLayout" id="' +  data[i].imdbId  + '"><i  id="fas fa-heart" class="fas fa-heart fa-2x"></i></a></td>' +
+                  '<td>' + data[i].title + '</td>' +
+                  '<td>' + data[i].year + '</td>' +
+                  '<td><a href="#" class="infoMovie infoUser btn btn-small btn-info" id="' + data[i].imdbId + '" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i> Info</a>' +
+                  '<a href="#" class="addUser removeFromLayout" id="' +  data[i].imdbId  + '"><i  id="fas fa-heart" class="fas fa-heart fa-2x"></i></a></td>' +
                   '</tr>';
       }
-      result += '</tbody></table>';
+      result += '</tbody></table></div>';
       document.getElementById('content').innerHTML = result;
+
+    //  document.getElementById('movieYearAsc').addEventListener('click', sortTableAsc);
       addEventListenerToRemoveFromLayout();
+      addEventListenerToSortTableMovie();
     }
   }
   xhr.send();
+}
+
+function sortTableMovie() {
+  var id = this.getAttribute('id');
+  var table = document.getElementById('userTable');
+  var rows = table.getElementsByTagName('TR');
+  var changeRow = true;
+
+  while(changeRow) {
+    changeRow = false;
+    for(var i = 0; i < (rows.length -1); i++){
+      var row = rows[i].getElementsByTagName('TD')[1];
+      var row2 = rows[i + 1].getElementsByTagName('TD')[1];
+      if(id == "asc"){
+        if(row.innerText.toLowerCase() < row2.innerText.toLowerCase()){
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          changeRow = true;
+        }
+      }else if( id === "desc") {
+        if(row.innerText.toLowerCase() > row2.innerText.toLowerCase()){
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          changeRow = true;
+        }
+      }
+    }
+  }
+}
+
+function addEventListenerToSortTableMovie() {
+  var sortMovieTable = document.getElementsByClassName('movieTitle');
+  for(var i = 0; i < sortMovieTable.length; i++) {
+    console.log("ciij");
+    sortMovieTable[i].addEventListener('click', sortTableMovie);
+  }
 }
 
 function addEventListenerToRemoveFromLayout() {
