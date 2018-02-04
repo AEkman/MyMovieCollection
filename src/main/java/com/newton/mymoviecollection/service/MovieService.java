@@ -3,9 +3,9 @@ package com.newton.mymoviecollection.service;
 import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,21 +16,19 @@ public class MovieService {
 
     // Get all movies from database
     public List<Movie> getAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-
-        return movies;
+        return movieRepository.findAll();
     }
 
     // Get movie by imdbId from database
     public Movie getMovieByImdbId(String imdbId) {
-        Movie movie = movieRepository.findByImdbId(imdbId);
-
-        return movie;
+        return movieRepository.findByImdbId(imdbId);
     }
 
     // Get movie by title from database
     public List<Movie> getMovieByTitle(String title) {
         List<Movie> movies = movieRepository.findByTitleContaining(title);
+
+        movies.sort(Comparator.comparing(Movie::getTitle));
 
         return movies;
     }
@@ -38,6 +36,8 @@ public class MovieService {
     // Get movie by year from database
     public List<Movie> getMovieByYear(String year) {
         List<Movie> movies = movieRepository.findByYearContaining(year);
+
+        movies.sort(Comparator.comparing(Movie::getYear));
 
         return movies;
     }
@@ -49,8 +49,8 @@ public class MovieService {
         List<Movie> databaseMovies = movieRepository.findAll();
         boolean movieAlreadyExists = false;
 
-        for(int i = 0; i < databaseMovies.size(); i++) {
-            if(databaseMovies.get(i).getImdbId().contains(movie.getImdbId())) {
+        for (Movie databaseMovie : databaseMovies) {
+            if (databaseMovie.getImdbId().contains(movie.getImdbId())) {
                 movieAlreadyExists = true;
                 break;
             } else {
@@ -58,7 +58,7 @@ public class MovieService {
             }
         }
 
-        if(movieAlreadyExists == false) {
+        if(!movieAlreadyExists) {
             movieRepository.save(movie);
 
         }
@@ -72,9 +72,5 @@ public class MovieService {
     // Delete movie by imdbId from database
     public void deleteMovie(String imdbId) {
         movieRepository.delete(imdbId);
-    }
-
-    @CacheEvict(value = "movies", allEntries = true)
-    public void evictCache() {
     }
 }

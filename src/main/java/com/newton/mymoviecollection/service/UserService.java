@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,8 +27,7 @@ public class UserService {
 
     // Update a user on database
     public void updateUser(User user){
-        List<Movie> movies = new ArrayList<>();
-        userRepository.findOne(user.getId()).getMovies().forEach(movies::add);
+        List<Movie> movies = new ArrayList<>(userRepository.findOne(user.getId()).getMovies());
         user.setMovies(movies);
 
         userRepository.save(user);
@@ -44,9 +44,9 @@ public class UserService {
         boolean userMovieAlreadyExists = false;
 
         // Check if user already has movie
-        for(int i = 0; i < userMovies.size(); i++) {
+        for (Movie userMovie: userMovies) {
 
-            if(userMovies.get(i).getImdbId().contains(movie.getImdbId())) {
+            if (userMovie.getImdbId().contains(movie.getImdbId())) {
                 userMovieAlreadyExists = true;
                 break;
             } else {
@@ -54,7 +54,7 @@ public class UserService {
             }
         }
 
-        if (userMovieAlreadyExists == false) {
+        if (!userMovieAlreadyExists) {
             userMovies.add(movie);
             user.setMovies(userMovies);
             userRepository.save(user);
@@ -63,8 +63,7 @@ public class UserService {
 
     // Update a user by deleting movie on database
     public void updateUserDeleteMovie(User user, String imdbId){
-        List<Movie> movies = new ArrayList<>();
-        userRepository.findOne(user.getId()).getMovies().forEach(movies::add);
+        List<Movie> movies = new ArrayList<>(userRepository.findOne(user.getId()).getMovies());
 
         Movie movieToDelete = movieService.getMovieByImdbId(imdbId);
 
@@ -80,22 +79,19 @@ public class UserService {
 
     // Get all users from database
     public List<User> getAllUsers() {
-        List<User> users = userRepository.findAll();
-
-        return users;
+        return userRepository.findAll();
     }
 
     // Get user by id from database
     public User getUserById(Long id) {
-        User user = userRepository.findOne(id);
-
-        return user;
+        return userRepository.findOne(id);
     }
 
     // Get all movies from a users list
     public List<Movie> getMoviesByUserId(Long id) {
-        List<Movie> movies = new ArrayList<>();
-        userRepository.findOne(id).getMovies().forEach(movies::add);
+        List<Movie> movies = new ArrayList<>(userRepository.findOne(id).getMovies());
+
+        movies.sort(Comparator.comparing(Movie::getTitle));
 
         return movies;
     }
@@ -110,10 +106,16 @@ public class UserService {
     public void evictCache() {
     }
 
-    // Get user byt username from database
+    // Get user by username from database
     public User getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
+    }
 
-        return user;
+    public List<Movie> getMoviesByUserIdSortByYear(Long id) {
+        List<Movie> movies = new ArrayList<>(userRepository.findOne(id).getMovies());
+
+        movies.sort(Comparator.comparing(Movie::getYear));
+
+        return movies;
     }
 }

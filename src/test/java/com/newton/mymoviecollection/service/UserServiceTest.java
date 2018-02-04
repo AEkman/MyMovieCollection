@@ -1,5 +1,6 @@
 package com.newton.mymoviecollection.service;
 
+import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +24,9 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MovieService movieService;
+
     @Before
     public void setUp() {
         // Reset cache before each test
@@ -36,7 +40,7 @@ public class UserServiceTest {
 
         User result = userService.getUserById(testUser.getId());
 
-        Assert.assertEquals("Failure - Couldn't find testUser", result, testUser);
+        Assert.assertEquals("Failure - Couldn't find testUser", testUser, result);
     }
 
     @Test

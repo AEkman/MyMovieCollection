@@ -1,11 +1,7 @@
 package com.newton.mymoviecollection.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -17,7 +13,8 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(
+            fetch=FetchType.EAGER)
     @JoinTable(name = "user_movies",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "imdbId")}

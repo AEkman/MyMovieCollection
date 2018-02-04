@@ -2,28 +2,28 @@ package com.newton.mymoviecollection.seeder;
 
 import com.newton.mymoviecollection.entity.Movie;
 import com.newton.mymoviecollection.entity.User;
-import com.newton.mymoviecollection.repository.UserRepository;
 import com.newton.mymoviecollection.service.MovieService;
 import com.newton.mymoviecollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final MovieService movieService;
 
     @Autowired
-    private MovieService movieService;
+    public DatabaseSeeder(UserService userService, MovieService movieService) {
+        this.userService = userService;
+        this.movieService = movieService;
+    }
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
 
         // Movie 1
         Movie harryPotter = new Movie("Harry Potter and the Deathly Hallows: Part 2",

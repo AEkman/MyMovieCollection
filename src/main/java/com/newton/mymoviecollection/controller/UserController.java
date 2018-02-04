@@ -42,6 +42,12 @@ public class UserController {
         return userService.getMoviesByUserId(id);
     }
 
+    // Get movies by user sorted by year
+    @GetMapping(value ="/user/{id}/movies/sortbyyear")
+    public List<Movie> getUserMoviesSortedByYear(@PathVariable Long id){
+        return userService.getMoviesByUserIdSortByYear(id);
+    }
+
 
 /* User - PostMappings */
 
