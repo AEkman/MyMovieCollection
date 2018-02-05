@@ -17,17 +17,12 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8080/movies">My Movies</a>
-            </li>
         </ul>
         <form class="form-inline">
             <div class="form-group mx-sm-3 mb-2">
-                <!--<label for="inputPassword" class="sr-only">Email</label>-->
                 <input type="text" class="form-control" id="inputUser" placeholder="User" />
             </div>
             <div class="form-group mx-sm-3 mb-2" >
-                <!--<label for="inputPassword" class="sr-only">Password</label>-->
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" />
             </div>
             <button type="submit" class="btn btn-primary mb-2 btn-outline-light" id="loginButton">Login</button>
@@ -46,7 +41,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="createNewUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -82,6 +77,45 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="successfulCreatingNewUser">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="card border-success mb-3 mx-auto" style="max-width: 20rem; max-height: 20rem">
+                <div class="card-header">Successful!</div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">The new user have been created.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="errorCreatingNewUser">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="card border-danger mb-3 mx-auto" style="max-width: 20rem; max-height: 20rem">
+                <div class="card-header">Error!</div>
+                <div class="card-body text-danger">
+                    <h5 class="card-title">User with that name already exist.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="wrongUsernameOrPassword">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="card border-danger mb-3 mx-auto" style="max-width: 20rem; max-height: 20rem">
+                <div class="card-header">Error!</div>
+                <div class="card-body text-danger">
+                    <h5 class="card-title">Wrong username or password.</h5>
+                </div>
+            </div>
         </div>
     </div>
 </div>

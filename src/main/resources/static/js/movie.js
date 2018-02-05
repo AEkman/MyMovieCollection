@@ -1,5 +1,4 @@
 
-var userId = document.cookie;
 document.getElementById('myMovies').addEventListener('click', getUserMovies);
 document.getElementById('searchInput').addEventListener('keypress', getSearchResult);
 
@@ -76,6 +75,7 @@ function delMovieFromUserList(imdbId) {
   xhr.send();
 }
 
+//TODO
 function getUserMovies() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', `user/${ userId }/movies`);
@@ -112,6 +112,7 @@ function getUserMovies() {
       result += '</tbody></table></div>';
       document.getElementById('content').innerHTML = result;
 
+    //  document.getElementById('movieYearAsc').addEventListener('click', sortTableAsc);
       addEventListenerToRemoveFromLayout();
       addEventListenerToSortTableMovie();
     }
@@ -256,3 +257,9 @@ function createModalHtml() {
         '</div>' +
         '</div>'
 }
+
+function logOut() {
+    window.location.href = "http://localhost:8080";
+}
+
+
