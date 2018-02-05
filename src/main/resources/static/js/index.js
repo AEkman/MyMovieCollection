@@ -85,6 +85,7 @@ $(document).ready( function() {
                 for(var i = 0; i < data.length; i++) {
                     console.log(data[i].username + " : " + data[i].password);
                     if(data[i].username === username && data[i].password === password) {
+                        document.cookie = "id=" + data[i].id;
                         alert("Welcome user");
                         foundUser = true;
                         break;
