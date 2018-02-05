@@ -120,7 +120,7 @@ function getUserMovies() {
   xhr.send();
 }
 
-function sortTableMovie() {
+function sortTableMovie(position) {
   var id = this.getAttribute('id');
   var table = document.getElementById('userTable');
   var rows = table.getElementsByTagName('TR');
