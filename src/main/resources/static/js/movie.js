@@ -1,4 +1,5 @@
 
+var userId = document.cookie;
 document.getElementById('myMovies').addEventListener('click', getUserMovies);
 document.getElementById('searchInput').addEventListener('keypress', getSearchResult);
 
@@ -58,7 +59,7 @@ function getMovieBeforeAddToUserList(imdbId){
 
 function addMovieToUserList(data) {
     var xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'user/1/add/movie');
+    xhr.open('PUT', `user/${ userId }/add/movie`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
       "title": data.Title,
@@ -69,16 +70,15 @@ function addMovieToUserList(data) {
 }
 
 function delMovieFromUserList(imdbId) {
-  var url = `user/1/delete/movie/${ imdbId }`;
+  var url = `user/${ userId }/delete/movie/${ imdbId }`;
   var xhr = new XMLHttpRequest();
   xhr.open('PUT', url);
   xhr.send();
 }
 
-//TODO
 function getUserMovies() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://localhost:8080/user/1/movies');
+  xhr.open('GET', `user/${ userId }/movies`);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onload = function() {
     if(this.status == 200 && this.readyState === 4){
@@ -89,12 +89,12 @@ function getUserMovies() {
                   '<tr>' +
                   '<th class="width10" scope="col"></th>' +
                   '<th class="width60" scope="col">Title ' +
-                  '<a href="#" id="asc" class="movieTitle"><i class="fas fa-chevron-up"></i></a> ' +
-                  '<a href="#" id="desc" class="movieTitle"><i class="fas fa-chevron-down"></i></a> ' +
+                  '<a href="#" id="asc"  class="sortTable title"><i class="fas fa-chevron-up"></i></a> ' +
+                  '<a href="#" id="desc" class="sortTable title"><i class="fas fa-chevron-down"></i></a> ' +
                   '</th>' +
                   '<th class="width10" scope="col">Year ' +
-                  '<a href="#" id="movieYearAsc"><i class="fas fa-chevron-up"></i></a> ' +
-                  '<a href="#" id="movieYearDesc"><i class="fas fa-chevron-down"></i></a> ' +
+                  '<a href="#" id="asc" class="sortTable"><i class="fas fa-chevron-up"></i></a> ' +
+                  '<a href="#" id="desc" class="sortTable"><i class="fas fa-chevron-down"></i></a> ' +
                   '</th>' +
                   '<th class="width20" scope="col"></th>' +
                   '</tr>' +
@@ -112,7 +112,6 @@ function getUserMovies() {
       result += '</tbody></table></div>';
       document.getElementById('content').innerHTML = result;
 
-    //  document.getElementById('movieYearAsc').addEventListener('click', sortTableAsc);
       addEventListenerToRemoveFromLayout();
       addEventListenerToSortTableMovie();
     }
@@ -120,23 +119,25 @@ function getUserMovies() {
   xhr.send();
 }
 
-function sortTableMovie(position) {
+function sortTableMovie() {
   var id = this.getAttribute('id');
   var table = document.getElementById('userTable');
   var rows = table.getElementsByTagName('TR');
   var changeRow = true;
+  var titleOrYear = this.getAttribute('class');
+  var postition = (titleOrYear.indexOf("title") > -1) ? 1 : 2;
 
   while(changeRow) {
     changeRow = false;
     for(var i = 0; i < (rows.length -1); i++){
-      var row = rows[i].getElementsByTagName('TD')[1];
-      var row2 = rows[i + 1].getElementsByTagName('TD')[1];
+      var row = rows[i].getElementsByTagName('TD')[postition];
+      var row2 = rows[i + 1].getElementsByTagName('TD')[postition];
       if(id == "asc"){
         if(row.innerText.toLowerCase() < row2.innerText.toLowerCase()){
           rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
           changeRow = true;
         }
-      }else if( id === "desc") {
+      }else if(id === "desc") {
         if(row.innerText.toLowerCase() > row2.innerText.toLowerCase()){
           rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
           changeRow = true;
@@ -147,9 +148,8 @@ function sortTableMovie(position) {
 }
 
 function addEventListenerToSortTableMovie() {
-  var sortMovieTable = document.getElementsByClassName('movieTitle');
+  var sortMovieTable = document.getElementsByClassName('sortTable');
   for(var i = 0; i < sortMovieTable.length; i++) {
-    console.log("ciij");
     sortMovieTable[i].addEventListener('click', sortTableMovie);
   }
 }
@@ -186,7 +186,7 @@ function getSearchResult(event) {
 
 function createSearchResultCardLayout(data) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'user/1/movies');
+  xhr.open('GET', `user/${ userId }/movies`);
   xhr.onload = function() {
     if(this.status == 200 && this.readyState == 4){
       var userMovieList = JSON.parse(this.responseText);
@@ -256,5 +256,3 @@ function createModalHtml() {
         '</div>' +
         '</div>'
 }
-
-
