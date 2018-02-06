@@ -2,6 +2,8 @@
 document.getElementById('myMovies').addEventListener('click', getUserMovies);
 document.getElementById('searchInput').addEventListener('keypress', getSearchResult);
 
+var userId = document.cookie;
+
 function getInfoMovie(){
   var imdbId = this.getAttribute('id');
   var url = `http://www.omdbapi.com/?apikey=86e1e674&r=json&i=${ imdbId }`;
