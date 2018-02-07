@@ -34,8 +34,8 @@ function infoMovieModal(data) {
   document.getElementById('actors').innerText = data.Actors;
 }
 
-function addOrDeleteMovieFromUserList(){
-  event.preventDefault();
+function addOrDeleteMovieFromUserList(event){
+  (event.preventDefault) ? event.preventDefault() : false;
   var imdbId = this.getAttribute('id');
   var heartIcon = this.firstElementChild.id;
     if(heartIcon.indexOf("far fa-heart") > -1){
@@ -63,18 +63,20 @@ function getMovieBeforeAddToUserList(imdbId){
 }
 
 function addMovieToUserList(data) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', `user/${ userId }/add/movie`);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-      "title": data.Title,
-      "year": data.Year,
-      "imdbId": data.imdbID,
-      "poster": data.Poster
-    }));
+  showSnackBar(true);
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', `user/${ userId }/add/movie`);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+    "title": data.Title,
+    "year": data.Year,
+    "imdbId": data.imdbID,
+    "poster": data.Poster
+  }));
 }
 
 function delMovieFromUserList(imdbId) {
+  showSnackBar(false);
   var url = `user/${ userId }/delete/movie/${ imdbId }`;
   var xhr = new XMLHttpRequest();
   xhr.open('PUT', url);
@@ -116,7 +118,6 @@ function getUserMovies() {
       }
       result += '</tbody></table></div>';
       document.getElementById('content').innerHTML = result;
-
       addEventListenerToRemoveFromLayout();
       addEventListenerToSortTableMovie();
     }
@@ -260,6 +261,16 @@ function createModalHtml() {
         '</div>' +
         '</div>' +
         '</div>'
+}
+
+function showSnackBar(status) {
+  var snackbar = document.getElementById('snackbar');
+  (status) ? snackbar.innerText = "Filmen tillagd" : snackbar.innerText = "Filmen borttagen";
+  var show = (status) ? snackbar.className = "show statusAdd" : snackbar.className = "show statusDel";
+
+  setTimeout(function() {
+    snackbar.className = snackbar.className.replace(show, "");
+  }, 1000);
 }
 
 function logOut() {
