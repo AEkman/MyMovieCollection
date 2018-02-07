@@ -169,7 +169,8 @@ function addEventListenerToRemoveFromLayout() {
     }
 }
 
-function removeFromUserLayout() {
+function removeFromUserLayout(event) {
+  (event.preventDefault) ? event.preventDefault() : false;
   var imdbId = this.getAttribute('id');
   delMovieFromUserList(imdbId);
   this.parentNode.parentNode.remove();
