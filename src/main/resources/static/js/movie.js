@@ -1,8 +1,11 @@
 
 document.getElementById('myMovies').addEventListener('click', getUserMovies);
 document.getElementById('searchInput').addEventListener('keypress', getSearchResult);
-
-var userId = document.cookie;
+window.onload = function() {
+  userId = document.cookie;
+  getUserMovies();
+}
+var userId;
 
 function getInfoMovie(){
   var imdbId = this.getAttribute('id');
@@ -78,7 +81,6 @@ function delMovieFromUserList(imdbId) {
   xhr.send();
 }
 
-//TODO
 function getUserMovies() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', `user/${ userId }/movies`);
@@ -115,7 +117,6 @@ function getUserMovies() {
       result += '</tbody></table></div>';
       document.getElementById('content').innerHTML = result;
 
-    //  document.getElementById('movieYearAsc').addEventListener('click', sortTableAsc);
       addEventListenerToRemoveFromLayout();
       addEventListenerToSortTableMovie();
     }
