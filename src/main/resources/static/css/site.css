@@ -18,6 +18,12 @@ a.addUser {
   color: red;
 }
 
+a.delUser {
+  margin: 5px;
+  float: left;
+  color: #4c89ff;
+}
+
 div.cardStyle {
   margin-top: 60px;
   margin-left: 60px;

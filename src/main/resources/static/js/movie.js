@@ -32,6 +32,7 @@ function infoMovieModal(data) {
 }
 
 function addOrDeleteMovieFromUserList(){
+  event.preventDefault();
   var imdbId = this.getAttribute('id');
   var heartIcon = this.firstElementChild.id;
     if(heartIcon.indexOf("far fa-heart") > -1){
@@ -108,7 +109,7 @@ function getUserMovies() {
                   '<td>' + data[i].title + '</td>' +
                   '<td>' + data[i].year + '</td>' +
                   '<td><a href="#" class="infoMovie infoUser btn btn-small btn-info" id="' + data[i].imdbId + '" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i> Info</a>' +
-                  '<a href="#" class="addUser removeFromLayout" id="' +  data[i].imdbId  + '"><i  id="fas fa-heart" class="fas fa-heart fa-2x"></i></a></td>' +
+                  '<a href="#" class="delUser removeFromLayout" id="' +  data[i].imdbId  + '"><i  id="fas fa-heart" class="fas fa-trash fa-2x"></i></a></td>' +
                   '</tr>';
       }
       result += '</tbody></table></div>';
@@ -263,5 +264,3 @@ function createModalHtml() {
 function logOut() {
     window.location.href = "http://localhost:8080";
 }
-
-
